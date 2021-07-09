@@ -1,0 +1,14 @@
+.main-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.icon-padding {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.comics-container {
+  background-color: aquamarine;
+}
