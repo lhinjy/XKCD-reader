@@ -12,6 +12,23 @@
   <body>
     <div class="main-container">
       <h1>LANDSCAPE (SKETCH)</h1>
+      <div class="display-navigation-container">
+        <div>
+          Display per page
+          <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">1</button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="#home">1</a>
+              <a href="#about">3</a>
+              <a href="#contact">5</a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <input type="text" placeholder="Search.." />
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
       <div>
         <button class="w3-button w3-white w3-border w3-medium">
           <i class="fa fa-arrow-left icon-padding"></i>Previous
@@ -25,5 +42,26 @@
         <div class="comics-container">asd</div>
       </div>
     </div>
+    <script>
+      /* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.matches(".dropbtn")) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+    </script>
   </body>
 </html>
