@@ -22,6 +22,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   background-color: aquamarine;
+  padding-bottom: 150px;
 }
 .comics-card {
   display: flex;
@@ -38,31 +39,4 @@
   margin-right: 50px;
   width: 100%;
   font-size: 10px;
-}
-
-.show {
-  display: block;
-}
-
-.topnav input[type="text"] {
-  float: right;
-  padding: 6px;
-  border: none;
-  margin-top: 8px;
-  margin-right: 16px;
-  font-size: 17px;
-}
-.topnav .search-container button {
-  float: right;
-  padding: 6px 10px;
-  margin-top: 8px;
-  margin-right: 16px;
-  background: #ddd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-}
-
-.topnav .search-container button:hover {
-  background: #ccc;
 }
