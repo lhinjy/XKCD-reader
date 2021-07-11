@@ -1,7 +1,8 @@
 const comicsContainer = document.querySelector("#comics-container");
+const newComicCardParent = document.createElement("div");
+
 let currentComicNumber = 1;
 const lastComicNumber = 2475;
-// default at 1
 let displayNumber = 1;
 
 function buildComicCardHTML(comicData) {
@@ -12,19 +13,28 @@ function buildComicCardHTML(comicData) {
           </div>`;
 }
 
+function loaderHTML() {
+  return `<box class="loader-container"><div class="lds-heart"><div></div></div></box>`;
+}
+
 async function showComicNumber(number) {
   const newComicCard = document.createElement("div");
   const response = await fetch(`https://xkcd.vercel.app/?comic=${number}`);
   const comicData = await response.json();
 
   newComicCard.innerHTML = buildComicCardHTML(comicData);
-  comicsContainer.appendChild(newComicCard);
+  newComicCardParent.appendChild(newComicCard);
 }
 
 async function displayComics(numComicsPerPage) {
+  comicsContainer.innerHTML = loaderHTML();
   for (let idx = 0; idx < numComicsPerPage; idx++) {
     await showComicNumber(currentComicNumber + idx);
   }
+  window.setTimeout(function () {
+    comicsContainer.innerHTML = "";
+    comicsContainer.appendChild(newComicCardParent);
+  }, 1000);
 }
 
 function changeComicsDisplay() {
@@ -41,25 +51,43 @@ function comicsPageLogic() {
   }
 }
 
-function previousPage() {
+function previousPageBtn() {
   currentComicNumber = Number(currentComicNumber) - Number(displayNumber);
   updateComicsPage();
 }
 
-function nextPage() {
+function nextPageBtn() {
   currentComicNumber = Number(currentComicNumber) + Number(displayNumber);
   updateComicsPage();
 }
 
-function randomPage() {
+function randomPageBtn() {
   currentComicNumber = Math.floor(Math.random() * lastComicNumber + 1);
   updateComicsPage();
 }
 
-function updateComicsPage() {
+function searchValidation(searchTerm) {
+  return (
+    Number.isInteger(Number(searchTerm)) &&
+    Number(searchTerm) > 0 &&
+    Number(searchTerm) <= lastComicNumber
+  );
+}
+
+function searchComicNumber() {
+  const searchInput = document.querySelector("#input-text");
+  const result = searchValidation(searchInput.value);
+  if (result) {
+    currentComicNumber = Number(searchInput.value);
+    updateComicsPage();
+  }
+}
+
+async function updateComicsPage() {
   comicsContainer.innerHTML = "";
+  newComicCardParent.innerHTML = "";
   displayNumber = changeComicsDisplay();
   comicsPageLogic();
+
   displayComics(displayNumber);
 }
-updateComicsPage();
