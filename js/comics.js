@@ -4,8 +4,12 @@ const search = document.createElement("div");
 
 let currentComicNumber = 1;
 const lastComicNumber = 2475;
-let displayNumber = 1;
+// display X comic(s) per page. Default at 1
+let displayPerPage = 1;
 
+/*================================================================================
+|--------------------------------------------------------------------------------|
+================================================================================*/
 function buildComicCardHTML(comicData) {
   return `<div id="comic-card" class="comic-card">
             <h1 id="comics-title">${comicData["title"]}</h1>
@@ -22,21 +26,51 @@ function searchAlert(status) {
   searchCard = document.createElement("div");
   search.innerHTML = `<div class="search-alert-card">${status}</div>`;
 
+  // Delete alert after X seconds
   setTimeout(function () {
     search.remove();
-  }, 3000);
+  }, 2000);
   return search;
 }
 
-async function showComicNumber(number) {
+/*================================================================================
+|--------------------------------------------------------------------------------|
+================================================================================*/
+
+/*
+ Get data for given comic number from API
+ and display: title, image, number.
+
+ args:
+  number: integer
+
+returns:
+  none
+
+  e.g. Given number = 10, get comic number 10's title,
+  image, number and put into a UI component
+*/
+async function displayComicNumber(number) {
   const newComicCard = document.createElement("div");
   const response = await fetch(`https://xkcd.vercel.app/?comic=${number}`);
   const comicData = await response.json();
 
   newComicCard.innerHTML = buildComicCardHTML(comicData);
+
+  // To allow stacking of comic cards
   newComicCardParent.appendChild(newComicCard);
 }
 
+/*
+  Get comic numbers to be displayed according to the view per page
+ args:
+  number: integer
+
+returns:
+  none
+
+  e.g. 
+*/
 async function displayComics(numComicsPerPage) {
   comicsContainer.innerHTML = loaderHTML();
   for (let idx = 0; idx < numComicsPerPage; idx++) {
@@ -49,7 +83,7 @@ async function displayComics(numComicsPerPage) {
     if (displayingComic > lastComicNumber) {
       displayingComic = Number(displayingComic) - Number(lastComicNumber);
     }
-    await showComicNumber(displayingComic);
+    await displayComicNumber(displayingComic);
   }
   window.setTimeout(function () {
     comicsContainer.innerHTML = "";
@@ -58,17 +92,17 @@ async function displayComics(numComicsPerPage) {
 }
 
 function changeComicsDisplay() {
-  displayNumber = document.querySelector("#display-number");
-  return displayNumber.value;
+  displayPerPage = document.querySelector("#display-number");
+  return displayPerPage.value;
 }
 
 function previousPageBtn() {
-  currentComicNumber = Number(currentComicNumber) - Number(displayNumber);
+  currentComicNumber = Number(currentComicNumber) - Number(displayPerPage);
   updateComicsPage();
 }
 
 function nextPageBtn() {
-  currentComicNumber = Number(currentComicNumber) + Number(displayNumber);
+  currentComicNumber = Number(currentComicNumber) + Number(displayPerPage);
   updateComicsPage();
 }
 
@@ -76,6 +110,10 @@ function randomPageBtn() {
   currentComicNumber = Math.floor(Math.random() * lastComicNumber + 1);
   updateComicsPage();
 }
+
+/*================================================================================
+|--------------------------------------------------------------------------------|
+================================================================================*/
 
 function searchValidation(searchTerm) {
   let statusText = "";
@@ -116,9 +154,13 @@ function searchComicNumber() {
   searchInput.value = "";
 }
 
+/*================================================================================
+|--------------------------------------------------------------------------------|
+================================================================================*/
+
 async function updateComicsPage() {
   newComicCardParent.innerHTML = "";
-  displayNumber = changeComicsDisplay();
+  displayPerPage = changeComicsDisplay();
 
-  displayComics(displayNumber);
+  displayComics(displayPerPage);
 }
