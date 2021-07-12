@@ -1,5 +1,6 @@
 const comicsContainer = document.querySelector("#comics-container");
 const newComicCardParent = document.createElement("div");
+const search = document.createElement("div");
 
 let currentComicNumber = 1;
 const lastComicNumber = 2475;
@@ -18,11 +19,12 @@ function loaderHTML() {
 }
 
 function searchAlert(status) {
-  const search = document.createElement("div");
+  searchCard = document.createElement("div");
   search.innerHTML = `<div class="search-card">${status}</div>`;
+
   setTimeout(function () {
-    search.innerHTML = "";
-  }, 2000);
+    search.remove();
+  }, 3000);
   return search;
 }
 
@@ -91,7 +93,7 @@ function searchValidation(searchTerm) {
       statusText +
       "Invalid comic number." +
       "\n" +
-      "Comic number must be integer." +
+      "Comic number must be an integer." +
       "\n";
   }
   if (Number(searchTerm) < 0) {
@@ -103,14 +105,14 @@ function searchValidation(searchTerm) {
   if (Number(searchTerm) > lastComicNumber) {
     statusText =
       statusText +
-      `Invalid comic number. Comic number has over exceeded. Try Searching a comic number smaller than ${lastComicNumber}` +
+      `Invalid comic number. Comic number has over exceeded. Try searching a comic number smaller than ${lastComicNumber}` +
       "\n";
   } else if (
     Number.isInteger(Number(searchTerm)) &&
     Number(searchTerm) > 0 &&
     Number(searchTerm) <= lastComicNumber
   ) {
-    statusText = "Search completed";
+    statusText = "Search successful";
   }
   return [
     Number.isInteger(Number(searchTerm)) &&
@@ -124,6 +126,7 @@ function searchComicNumber() {
   const searchInput = document.querySelector("#input-text");
   const result = searchValidation(searchInput.value);
   document.body.appendChild(searchAlert(result[1]));
+
   if (result[0]) {
     currentComicNumber = Number(searchInput.value);
     updateComicsPage();
