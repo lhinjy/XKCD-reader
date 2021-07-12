@@ -5,7 +5,7 @@ const search = document.createElement("div");
 let currentComicNumber = 1;
 const lastComicNumber = 2475;
 // display X comic(s) per page. Default at 1
-let displayPerPage = 1;
+let comicPerPage = 1;
 
 /*================================================================================
 |--------------------------------------------------------------------------------|
@@ -64,16 +64,20 @@ async function displayComicNumber(number) {
 /*
   Get comic numbers to be displayed according to the view per page
  args:
-  number: integer
-
-returns:
   none
 
-  e.g. 
+ returns:
+  none
+
+  e.g. Provided currentComicNumber=5, comicPerPage=3, 
+        display comic number 5,6,7
+  e.g. Provided currentComicNumber=2473, comicPerPage=5, 
+        display comic number 2473, 2474, 2475, 0, 1
+
 */
 async function displayComics() {
   comicsContainer.innerHTML = loaderHTML();
-  for (let idx = 0; idx < displayPerPage; idx++) {
+  for (let idx = 0; idx < comicPerPage; idx++) {
     let displayingComic = Number(currentComicNumber) + Number(idx);
 
     if (currentComicNumber < 1) {
@@ -85,24 +89,26 @@ async function displayComics() {
     }
     await displayComicNumber(displayingComic);
   }
+  // Wait due to slow image rendering
   window.setTimeout(function () {
     comicsContainer.innerHTML = "";
     comicsContainer.appendChild(newComicCardParent);
   }, 2000);
 }
 
-function changeComicsDisplay() {
-  displayPerPage = document.querySelector("#display-number");
-  return displayPerPage.value;
+// Get dropdown menu's value for comic per page
+function changeComicPerPage() {
+  comicPerPage = document.querySelector("#display-number");
+  return comicPerPage.value;
 }
 
 function previousPageBtn() {
-  currentComicNumber = Number(currentComicNumber) - Number(displayPerPage);
+  currentComicNumber = Number(currentComicNumber) - Number(comicPerPage);
   updateComicsPage();
 }
 
 function nextPageBtn() {
-  currentComicNumber = Number(currentComicNumber) + Number(displayPerPage);
+  currentComicNumber = Number(currentComicNumber) + Number(comicPerPage);
   updateComicsPage();
 }
 
@@ -115,7 +121,24 @@ function randomPageBtn() {
 |--------------------------------------------------------------------------------|
 ================================================================================*/
 
+/*
+  Check validty of search input:
+  1. Exists
+  2. Integer 
+  3. Between comic range
+
+  args:
+    searchTerm: string
+
+  returns:
+    status: boolean
+    statusText: string
+  
+  e.g. Given searchTerm="475", returns {status:true, statusText:"//success text" }
+  e.g. Given searchTerm="sd", returns {status:false, statusText:"//not integer text" }
+*/
 function searchValidation(searchTerm) {
+  console.log(typeof searchTerm);
   let statusText = "";
   if (searchTerm === "") {
     statusText = "No comic number entered";
@@ -124,7 +147,8 @@ function searchValidation(searchTerm) {
   } else if (Number(searchTerm) < 0) {
     statusText = "Invalid comic number. Comic number must be positive.";
   } else if (Number(searchTerm) > lastComicNumber) {
-    statusText = `Invalid comic number. Comic number has over exceeded. Try searching a comic number smaller than ${lastComicNumber}`;
+    statusText = `Invalid comic number. Comic number has over exceeded. 
+    Try searching a comic number smaller than ${lastComicNumber}`;
   } else if (
     Number.isInteger(Number(searchTerm)) &&
     Number(searchTerm) > 0 &&
@@ -141,6 +165,18 @@ function searchValidation(searchTerm) {
   };
 }
 
+/*
+  Provide result of search input
+
+  args:
+    none
+    
+  returns:
+    none
+  
+  e.g. Provided search input is valid, display comic number that
+      corresponds to the search
+*/
 function searchComicNumber() {
   const searchInput = document.querySelector("#input-text");
 
@@ -160,7 +196,7 @@ function searchComicNumber() {
 
 async function updateComicsPage() {
   newComicCardParent.innerHTML = "";
-  displayPerPage = changeComicsDisplay();
+  comicPerPage = changeComicPerPage();
 
   displayComics();
 }
