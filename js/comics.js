@@ -20,6 +20,9 @@ function loaderHTML() {
 function searchAlert(status) {
   const search = document.createElement("div");
   search.innerHTML = `<div class="search-card">${status}</div>`;
+  setTimeout(function () {
+    search.innerHTML = "";
+  }, 2000);
   return search;
 }
 
@@ -82,20 +85,47 @@ function randomPageBtn() {
 }
 
 function searchValidation(searchTerm) {
-  return (
+  let statusText = "";
+  if (Number.isInteger(Number(searchTerm)) === false) {
+    statusText =
+      statusText +
+      "Invalid comic number." +
+      "\n" +
+      "Comic number must be integer." +
+      "\n";
+  }
+  if (Number(searchTerm) < 0) {
+    statusText =
+      statusText +
+      "Invalid comic number. Comic number must be positive." +
+      "\n";
+  }
+  if (Number(searchTerm) > lastComicNumber) {
+    statusText =
+      statusText +
+      `Invalid comic number. Comic number has over exceeded. Try Searching a comic number smaller than ${lastComicNumber}` +
+      "\n";
+  } else if (
     Number.isInteger(Number(searchTerm)) &&
     Number(searchTerm) > 0 &&
     Number(searchTerm) <= lastComicNumber
-  );
+  ) {
+    statusText = "Search completed";
+  }
+  return [
+    Number.isInteger(Number(searchTerm)) &&
+      Number(searchTerm) > 0 &&
+      Number(searchTerm) <= lastComicNumber,
+    statusText,
+  ];
 }
 
 function searchComicNumber() {
   const searchInput = document.querySelector("#input-text");
   const result = searchValidation(searchInput.value);
-  if (result) {
+  document.body.appendChild(searchAlert(result[1]));
+  if (result[0]) {
     currentComicNumber = Number(searchInput.value);
-    document.body.appendChild(searchAlert("Comic number found"));
-
     updateComicsPage();
   }
 }
