@@ -62,15 +62,6 @@ function changeComicsDisplay() {
   return displayNumber.value;
 }
 
-function comicsPageLogic() {
-  if (currentComicNumber === 0) {
-    currentComicNumber = lastComicNumber;
-  }
-  if (currentComicNumber === 2476) {
-    currentComicNumber = 1;
-  }
-}
-
 function previousPageBtn() {
   currentComicNumber = Number(currentComicNumber) - Number(displayNumber);
   updateComicsPage();
@@ -88,25 +79,14 @@ function randomPageBtn() {
 
 function searchValidation(searchTerm) {
   let statusText = "";
-  if (Number.isInteger(Number(searchTerm)) === false) {
-    statusText =
-      statusText +
-      "Invalid comic number." +
-      "\n" +
-      "Comic number must be an integer." +
-      "\n";
-  }
-  if (Number(searchTerm) < 0) {
-    statusText =
-      statusText +
-      "Invalid comic number. Comic number must be positive." +
-      "\n";
-  }
-  if (Number(searchTerm) > lastComicNumber) {
-    statusText =
-      statusText +
-      `Invalid comic number. Comic number has over exceeded. Try searching a comic number smaller than ${lastComicNumber}` +
-      "\n";
+  if (searchTerm === "") {
+    statusText = "No comic number entered";
+  } else if (Number.isInteger(Number(searchTerm)) === false) {
+    statusText = "Invalid comic number. Comic number must be an integer.";
+  } else if (Number(searchTerm) < 0) {
+    statusText = "Invalid comic number. Comic number must be positive.";
+  } else if (Number(searchTerm) > lastComicNumber) {
+    statusText = `Invalid comic number. Comic number has over exceeded. Try searching a comic number smaller than ${lastComicNumber}`;
   } else if (
     Number.isInteger(Number(searchTerm)) &&
     Number(searchTerm) > 0 &&
@@ -137,7 +117,7 @@ async function updateComicsPage() {
   comicsContainer.innerHTML = "";
   newComicCardParent.innerHTML = "";
   displayNumber = changeComicsDisplay();
-  comicsPageLogic();
+  // comicsPageLogic();
 
   displayComics(displayNumber);
 }
