@@ -94,21 +94,22 @@ function searchValidation(searchTerm) {
   ) {
     statusText = `Comic number ${searchTerm} is found successfully`;
   }
-  return [
-    Number.isInteger(Number(searchTerm)) &&
+  return {
+    status:
+      Number.isInteger(Number(searchTerm)) &&
       Number(searchTerm) > 0 &&
       Number(searchTerm) <= lastComicNumber,
-    statusText,
-  ];
+    statusText: statusText,
+  };
 }
 
 function searchComicNumber() {
   const searchInput = document.querySelector("#input-text");
 
   const result = searchValidation(searchInput.value);
-  document.body.appendChild(searchAlert(result[1]));
+  document.body.appendChild(searchAlert(result.statusText));
 
-  if (result[0]) {
+  if (result.status === true) {
     currentComicNumber = Number(searchInput.value);
     updateComicsPage();
   }
