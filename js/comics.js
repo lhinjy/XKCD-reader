@@ -54,7 +54,7 @@ async function displayComics(numComicsPerPage) {
   window.setTimeout(function () {
     comicsContainer.innerHTML = "";
     comicsContainer.appendChild(newComicCardParent);
-  }, 1000);
+  }, 2000);
 }
 
 function changeComicsDisplay() {
@@ -92,7 +92,7 @@ function searchValidation(searchTerm) {
     Number(searchTerm) > 0 &&
     Number(searchTerm) <= lastComicNumber
   ) {
-    statusText = "Search successful";
+    statusText = `Comic number ${searchTerm} is found successfully`;
   }
   return [
     Number.isInteger(Number(searchTerm)) &&
@@ -104,6 +104,7 @@ function searchValidation(searchTerm) {
 
 function searchComicNumber() {
   const searchInput = document.querySelector("#input-text");
+
   const result = searchValidation(searchInput.value);
   document.body.appendChild(searchAlert(result[1]));
 
@@ -111,13 +112,12 @@ function searchComicNumber() {
     currentComicNumber = Number(searchInput.value);
     updateComicsPage();
   }
+  searchInput.value = "";
 }
 
 async function updateComicsPage() {
-  comicsContainer.innerHTML = "";
   newComicCardParent.innerHTML = "";
   displayNumber = changeComicsDisplay();
-  // comicsPageLogic();
 
   displayComics(displayNumber);
 }
