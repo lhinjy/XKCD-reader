@@ -17,6 +17,12 @@ function loaderHTML() {
   return `<box class="loader-container"><div class="lds-heart"><div></div></div></box>`;
 }
 
+function searchAlert(status) {
+  const search = document.createElement("div");
+  search.innerHTML = `<div class="search-card">${status}</div>`;
+  return search;
+}
+
 async function showComicNumber(number) {
   const newComicCard = document.createElement("div");
   const response = await fetch(`https://xkcd.vercel.app/?comic=${number}`);
@@ -29,7 +35,16 @@ async function showComicNumber(number) {
 async function displayComics(numComicsPerPage) {
   comicsContainer.innerHTML = loaderHTML();
   for (let idx = 0; idx < numComicsPerPage; idx++) {
-    await showComicNumber(currentComicNumber + idx);
+    let displayingComic = Number(currentComicNumber) + Number(idx);
+
+    if (currentComicNumber < 1) {
+      displayingComic =
+        Number(lastComicNumber) + Number(currentComicNumber) + Number(idx);
+    }
+    if (displayingComic > lastComicNumber) {
+      displayingComic = Number(displayingComic) - Number(lastComicNumber);
+    }
+    await showComicNumber(displayingComic);
   }
   window.setTimeout(function () {
     comicsContainer.innerHTML = "";
@@ -79,6 +94,8 @@ function searchComicNumber() {
   const result = searchValidation(searchInput.value);
   if (result) {
     currentComicNumber = Number(searchInput.value);
+    document.body.appendChild(searchAlert("Comic number found"));
+
     updateComicsPage();
   }
 }
