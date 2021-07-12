@@ -71,9 +71,9 @@ returns:
 
   e.g. 
 */
-async function displayComics(numComicsPerPage) {
+async function displayComics() {
   comicsContainer.innerHTML = loaderHTML();
-  for (let idx = 0; idx < numComicsPerPage; idx++) {
+  for (let idx = 0; idx < displayPerPage; idx++) {
     let displayingComic = Number(currentComicNumber) + Number(idx);
 
     if (currentComicNumber < 1) {
@@ -162,5 +162,5 @@ async function updateComicsPage() {
   newComicCardParent.innerHTML = "";
   displayPerPage = changeComicsDisplay();
 
-  displayComics(displayPerPage);
+  displayComics();
 }
