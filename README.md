@@ -31,6 +31,8 @@ Go to the project directory & double click on index.html 👌
 
 ## Functionalities
 
+[To XKCD reader](https://xkcd-reader.vercel.app/)
+
 1. Display number of comics in a page
    - 1 / 3 / 5
 2. Display comics
