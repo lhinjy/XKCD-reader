@@ -19,7 +19,6 @@ function loaderHTML() {
 }
 
 function searchAlert(status) {
-  searchCard = document.createElement("div");
   search.innerHTML = `<div class="search-card">${status}</div>`;
 
   setTimeout(function () {
@@ -114,10 +113,8 @@ function searchComicNumber() {
 }
 
 async function updateComicsPage() {
-  comicsContainer.innerHTML = "";
   newComicCardParent.innerHTML = "";
   displayNumber = changeComicsDisplay();
-  // comicsPageLogic();
 
   displayComics(displayNumber);
 }
