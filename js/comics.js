@@ -7,10 +7,10 @@ const lastComicNumber = 2475;
 let displayNumber = 1;
 
 function buildComicCardHTML(comicData) {
-  return `<div id="comics-card" class="comics-card">
+  return `<div id="comic-card" class="comic-card">
             <h1 id="comics-title">${comicData["title"]}</h1>
-            <img id="comics-image" src="${comicData["img"]}"/>
-            <p class="comics-title" >${comicData["num"]}</p>
+            <img id="comic-image" src="${comicData["img"]}"/>
+            <p class="comic-number" >${comicData["num"]}</p>
           </div>`;
 }
 
@@ -20,7 +20,7 @@ function loaderHTML() {
 
 function searchAlert(status) {
   searchCard = document.createElement("div");
-  search.innerHTML = `<div class="search-card">${status}</div>`;
+  search.innerHTML = `<div class="search-alert-card">${status}</div>`;
 
   setTimeout(function () {
     search.remove();
