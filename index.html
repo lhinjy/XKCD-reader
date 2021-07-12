@@ -27,7 +27,7 @@
         </Box>
         <div>
           <input id="input-text" type="text" placeholder="Enter comic number" />
-          <button onclick="searchComicNumber()">Go</button>
+          <button onclick="searchComicNumber()" id="search-comic">Go</button>
         </div>
       </div>
       <div class="comics-navigation">
@@ -65,6 +65,17 @@
       function scrollToTop() {
         window.scrollTo(0, 0);
       }
+    </script>
+    <script>
+      document
+        .querySelector("#input-text")
+        .addEventListener("keyup", (event) => {
+          if (event.keyCode === 13) {
+            console.log("ASd");
+            document.querySelector("#search-comic").click();
+            searchComicNumber();
+          }
+        });
     </script>
   </body>
 </html>
