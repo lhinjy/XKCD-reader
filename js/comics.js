@@ -3,12 +3,13 @@ const newComicCardParent = document.createElement("div");
 const search = document.createElement("div");
 
 let currentComicNumber = 1;
+// as required
 const lastComicNumber = 2475;
 // display X comic(s) per page. Default at 1
 let comicPerPage = 1;
 
 /*================================================================================
-|--------------------------------------------------------------------------------|
+|----------------------Start of HTML functions----------------------------------------------------------|
 ================================================================================*/
 function buildComicCardHTML(comicData) {
   return `<div id="comic-card" class="comic-card">
@@ -34,9 +35,12 @@ function searchAlert(status) {
 }
 
 /*================================================================================
-|--------------------------------------------------------------------------------|
+|---------------------End of HTML functions----------------------------------------------------------|
 ================================================================================*/
 
+/*================================================================================
+|---------------------Start of comics helper functions----------------------------------------------------------|
+================================================================================*/
 /*
  Get data for given comic number from API
  and display: title, image, number.
@@ -62,7 +66,8 @@ async function displayComicNumber(number) {
 }
 
 /*
-  Get comic numbers to be displayed according to the view per page
+  Get comic numbers to be displayed according to the view per page.
+
  args:
   none
 
@@ -90,10 +95,15 @@ async function displayComics() {
     await displayComicNumber(displayingComic);
   }
   // Wait due to slow image rendering
-  window.setTimeout(function () {
-    comicsContainer.innerHTML = "";
-    comicsContainer.appendChild(newComicCardParent);
-  }, 2000);
+  window.setTimeout(
+    function () {
+      comicsContainer.innerHTML = "";
+      comicsContainer.appendChild(newComicCardParent);
+    },
+    () => {
+      comicPerPage === 1 ? 1000 : 2000;
+    }
+  );
 }
 
 // Get dropdown menu's value for comic per page
@@ -101,6 +111,14 @@ function changeComicPerPage() {
   comicPerPage = document.querySelector("#display-number");
   return comicPerPage.value;
 }
+
+/*================================================================================
+|---------------------End of comics helper functions----------------------------------------------------------|
+================================================================================*/
+
+/*================================================================================
+|---------------------Start of page navigation functions----------------------------------------------------------|
+================================================================================*/
 
 function previousPageBtn() {
   currentComicNumber = Number(currentComicNumber) - Number(comicPerPage);
@@ -116,9 +134,12 @@ function randomPageBtn() {
   currentComicNumber = Math.floor(Math.random() * lastComicNumber + 1);
   updateComicsPage();
 }
+/*================================================================================
+|---------------------End of page navigation functions----------------------------------------------------------|
+================================================================================*/
 
 /*================================================================================
-|--------------------------------------------------------------------------------|
+|----------------------Start of search helper functions----------------------------------------------------------|
 ================================================================================*/
 
 /*
@@ -189,9 +210,12 @@ function searchComicNumber() {
   }
   searchInput.value = "";
 }
+/*================================================================================
+|----------------------End of search helper functions----------------------------------------------------------|
+================================================================================*/
 
 /*================================================================================
-|--------------------------------------------------------------------------------|
+|----------------------Main function to update UI----------------------------------------------------------|
 ================================================================================*/
 
 async function updateComicsPage() {

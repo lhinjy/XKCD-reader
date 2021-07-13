@@ -4,10 +4,6 @@ This project takes in comics data from [XKCD](https://xkcd.vercel.app/) and disp
 
 [To XKCD reader](https://xkcd-reader-lhinjy.vercel.app/)
 
-## Acknowledgements
-
-- [Loader](https://loading.io/css/)
-
 ## Getting Started
 
 ### Run Locally
@@ -29,9 +25,11 @@ Go to the project directory & double click on index.html 👌
   https://github.com/lhinjy/XKCD-reader
 ```
 
-## Functionalities
+## Documentation
 
-[To XKCD reader](https://xkcd-reader.vercel.app/)
+Since this project is of small scope, I've written the documentation on the code itself [@comics.js](https://github.com/lhinjy/XKCD-reader/blob/29101ac1f643a9c9643d6bc007666d46c01c53fb/js/comics.js)
+
+## Functionalities
 
 1. Display number of comics in a page
    - 1 / 3 / 5
@@ -44,5 +42,9 @@ Go to the project directory & double click on index.html 👌
    - Next
 4. Search by
    - Comic number
-     - Check for validty of number
+     - Check for validity of number
 5. Loading UI
+
+## Acknowledgements
+
+- [Loader](https://loading.io/css/)
