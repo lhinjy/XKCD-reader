@@ -95,15 +95,10 @@ async function displayComics() {
     await displayComicNumber(displayingComic);
   }
   // Wait due to slow image rendering
-  window.setTimeout(
-    function () {
-      comicsContainer.innerHTML = "";
-      comicsContainer.appendChild(newComicCardParent);
-    },
-    () => {
-      comicPerPage === 1 ? 1000 : 2000;
-    }
-  );
+  window.setTimeout(function () {
+    comicsContainer.innerHTML = "";
+    comicsContainer.appendChild(newComicCardParent);
+  }, 2000);
 }
 
 // Get dropdown menu's value for comic per page
