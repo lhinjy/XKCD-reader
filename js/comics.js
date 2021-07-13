@@ -154,7 +154,6 @@ function randomPageBtn() {
   e.g. Given searchTerm="sd", returns {status:false, statusText:"//not integer text" }
 */
 function searchValidation(searchTerm) {
-  console.log(typeof searchTerm);
   let statusText = "";
   if (searchTerm === "") {
     statusText = "No comic number entered";
