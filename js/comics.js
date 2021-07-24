@@ -20,10 +20,11 @@ function buildComicCardHTML(comicData) {
 
   return `<div id="comic-card" class="comic-card" >
             <p id="comic-title">${comicData["title"]}</p>
+                        <p class="comic-number" >${comicData["num"]}</p>
+
             <img id="comic-image" width="${widthValue - 15}" src="${
     comicData["img"]
   }"/>
-            <p class="comic-number" >${comicData["num"]}</p>
           </div>`;
 }
 
