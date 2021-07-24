@@ -13,9 +13,9 @@
     />
     <link rel="shortcut icon" type="image/png" href="./favicon.png" />
   </head>
-  <body onload="updateComicsPage()" id="body-here">
+  <body onload="updateComicsPage()" class="body-container">
+    <Box class="menu-top"> XKCD reader </Box>
     <div class="main-container">
-      <h1>XKCD reader</h1>
       <div class="display-search-container">
         <Box>
           Display per page
@@ -30,6 +30,7 @@
           <button onclick="searchComicNumber()" id="search-comic">Go</button>
         </div>
       </div>
+
       <div class="comics-navigation">
         <button
           class="w3-button w3-white w3-border w3-medium"
@@ -53,19 +54,12 @@
           Next<i class="fa fa-arrow-right icon-padding"></i>
         </button>
       </div>
-      <div>
-        <div class="comics-container" id="comics-container"></div>
-      </div>
-      <div>
-        <p onclick="scrollToTop()">To Top</p>
-      </div>
+      <div id="total-comics" class="total-comics"></div>
+
+      <div class="comics-container" id="comics-container"></div>
     </div>
     <script src="js/comics.js"></script>
-    <script>
-      function scrollToTop() {
-        window.scrollTo(0, 0);
-      }
-    </script>
+
     <script>
       document
         .querySelector("#input-text")

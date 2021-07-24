@@ -13,7 +13,7 @@ let comicPerPage = 1;
 ================================================================================*/
 function buildComicCardHTML(comicData) {
   return `<div id="comic-card" class="comic-card">
-            <h1 id="comics-title">${comicData["title"]}</h1>
+            <h1 id="comic-title">${comicData["title"]}</h1>
             <img id="comic-image" src="${comicData["img"]}"/>
             <p class="comic-number" >${comicData["num"]}</p>
           </div>`;
@@ -21,6 +21,12 @@ function buildComicCardHTML(comicData) {
 
 function loaderHTML() {
   return `<box class="loader-container"><div class="lds-heart"><div></div></div></box>`;
+}
+
+function totalNumComics(comicPerPage) {
+  return (document.querySelector(
+    "#total-comics"
+  ).innerHTML = `Displaying ${comicPerPage} out of ${lastComicNumber}`);
 }
 
 function searchAlert(status) {
@@ -215,6 +221,6 @@ function searchComicNumber() {
 async function updateComicsPage() {
   newComicCardParent.innerHTML = "";
   comicPerPage = changeComicPerPage();
-
+  totalNumComics(comicPerPage);
   displayComics();
 }

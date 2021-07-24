@@ -1,9 +1,21 @@
+.body-container {
+  background-color: #faf6f2;
+}
 .main-container {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
-
+.menu-top {
+  background-color: #2b3034;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  padding: 10px;
+  font-size: 50px;
+  color: #faf6f2;
+  margin-bottom: 50px;
+}
 .display-search-container {
   display: flex;
   flex-direction: row;
@@ -11,7 +23,9 @@
   width: 100vw;
   margin-bottom: 10px;
 }
-
+.total-comics {
+  padding: 15px;
+}
 .icon-padding {
   padding-left: 3px;
   padding-right: 3px;
