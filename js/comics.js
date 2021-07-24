@@ -1,5 +1,6 @@
 const comicsContainer = document.querySelector("#comics-container");
 const newComicCardParent = document.createElement("div");
+newComicCardParent.className = "comic-parent-container";
 const search = document.createElement("div");
 
 let currentComicNumber = 1;
@@ -12,9 +13,16 @@ let comicPerPage = 1;
 |----------------------Start of HTML functions-----------------------------------|
 ================================================================================*/
 function buildComicCardHTML(comicData) {
-  return `<div id="comic-card" class="comic-card">
-            <h1 id="comic-title">${comicData["title"]}</h1>
-            <img id="comic-image" src="${comicData["img"]}"/>
+  const widthValue =
+    comicPerPage == 1
+      ? 1
+      : Math.floor(comicsContainer.offsetWidth / comicPerPage);
+
+  return `<div id="comic-card" class="comic-card" >
+            <p id="comic-title">${comicData["title"]}</p>
+            <img id="comic-image" width="${widthValue - 15}" src="${
+    comicData["img"]
+  }"/>
             <p class="comic-number" >${comicData["num"]}</p>
           </div>`;
 }
@@ -36,7 +44,7 @@ function searchAlert(status) {
   // Delete alert after X seconds
   setTimeout(function () {
     search.remove();
-  }, 2000);
+  }, 5000);
   return search;
 }
 
@@ -47,6 +55,7 @@ function searchAlert(status) {
 /*================================================================================
 |---------------------Start of comics helper functions----------------------------|
 ================================================================================*/
+
 /*
  Get data for given comic number from API
  and display: title, image, number.
@@ -110,6 +119,8 @@ async function displayComics() {
 // Get dropdown menu's value for comic per page
 function changeComicPerPage() {
   comicPerPage = document.querySelector("#display-number");
+  totalNumComics(comicPerPage.value);
+
   return comicPerPage.value;
 }
 
@@ -221,6 +232,5 @@ function searchComicNumber() {
 async function updateComicsPage() {
   newComicCardParent.innerHTML = "";
   comicPerPage = changeComicPerPage();
-  totalNumComics(comicPerPage);
   displayComics();
 }
