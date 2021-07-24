@@ -31,7 +31,7 @@ Since this project is of small scope, I've written the documentation on the code
 
 ## Branches
 
-[horizontalView](https://github.com/lhinjy/XKCD-reader/tree/horizontalView): Display comics horizontally
+[main](https://github.com/lhinjy/XKCD-reader/tree/horizontalView): Display comics horizontally
 
 [verticalView](https://github.com/lhinjy/XKCD-reader/tree/verticalView): Display comics vertically
 
