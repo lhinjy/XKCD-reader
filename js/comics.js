@@ -82,7 +82,10 @@ async function displayComicNumber(number) {
 }
 
 /*
-  Get comic numbers to be displayed according to the view per page.
+  Get comic numbers to be displayed according to the view per page. 
+  Current comic is always at the center. 
+  If comicPerPage = Y, currentComicNumber = X, 
+  displayed:  X-Y/2, X-Y/2 + 1,... , X, ..., X+ Y/2 -1, X + Y/2 
 
  args:
   none
@@ -91,23 +94,31 @@ async function displayComicNumber(number) {
   none
 
   e.g. Provided currentComicNumber=5, comicPerPage=3, 
-        display comic number 5,6,7
+        display comic number 4, 5, 6
   e.g. Provided currentComicNumber=2473, comicPerPage=5, 
-        display comic number 2473, 2474, 2475, 0, 1
+        display comic number 2471, 2472, 2473, 2474, 2475
 
 */
 async function displayComics() {
   comicsContainer.innerHTML = loaderHTML();
-  for (let idx = 0; idx < comicPerPage; idx++) {
-    let displayingComic = Number(currentComicNumber) + Number(idx);
+  const comicOffset = comicPerPage == 3 ? 1 : comicPerPage == 5 ? 2 : 0;
 
-    if (currentComicNumber < 1) {
+  for (let idx = 0; idx < comicPerPage; idx++) {
+    let displayingComic =
+      Number(currentComicNumber) + Number(idx) - Number(comicOffset);
+
+    if (displayingComic < 1) {
       displayingComic =
-        Number(lastComicNumber) + Number(currentComicNumber) + Number(idx);
+        Number(lastComicNumber) +
+        Number(currentComicNumber) +
+        Number(idx) -
+        Number(comicOffset);
     }
     if (displayingComic > lastComicNumber) {
-      displayingComic = Number(displayingComic) - Number(lastComicNumber);
+      displayingComic =
+        Number(displayingComic) - Number(lastComicNumber) - Number(comicOffset);
     }
+    console.log(displayingComic);
     await displayComicNumber(displayingComic);
   }
   // Wait due to slow image rendering
