@@ -19,10 +19,10 @@ function buildComicCardHTML(comicData) {
       : Math.floor(comicsContainer.offsetWidth / comicPerPage);
 
   return `<div id="comic-card" class="comic-card" >
-            <p id="comic-title">${comicData["title"]}</p>
+            <p id="comic-title" class="comic-title">${comicData["title"]}</p>
                         <p class="comic-number" >${comicData["num"]}</p>
 
-            <img id="comic-image" width="${widthValue - 15}" src="${
+            <img id="comic-image" width="${widthValue - 15}"  src="${
     comicData["img"]
   }"/>
           </div>`;
