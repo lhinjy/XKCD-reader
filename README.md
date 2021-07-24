@@ -29,6 +29,11 @@ Go to the project directory & double click on index.html 👌
 
 Since this project is of small scope, I've written the documentation on the code itself [@comics.js](https://github.com/lhinjy/XKCD-reader/blob/29101ac1f643a9c9643d6bc007666d46c01c53fb/js/comics.js)
 
+## Branches
+
+[horizontalView](https://github.com/lhinjy/XKCD-reader/tree/horizontalView): Display comics horizontally
+[verticalView](https://github.com/lhinjy/XKCD-reader/tree/verticalView): Display comics vertically
+
 ## Functionalities
 
 1. Display number of comics in a page
